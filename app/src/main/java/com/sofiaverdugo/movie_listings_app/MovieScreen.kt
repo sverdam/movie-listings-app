@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.sofiaverdugo.movie_listings_app.ui.theme.MovielistingsappTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -40,19 +41,28 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MovieScreen(onMovieClick: (Int) -> Unit) {
+fun MovieScreen(onMovieClick: (Int) -> Unit, user: String, onLogout: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF12121F))
             .padding(24.dp)
     ) {
-        Text(
-            text = "Movies",
-            style = MaterialTheme.typography.headlineMedium,
-            color = Color.White,
-            fontWeight = FontWeight.Bold,
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text(
+                    text = "Movies",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = Color.White
+                )
+                Text(text = user, style = MaterialTheme.typography.bodySmall)
+            }
+            TextButton(onClick = onLogout) { Text("Log out") }
+        }
         LazyColumn(
             contentPadding = PaddingValues(24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -111,6 +121,6 @@ fun MovieItem(movie: Movie, onClick: () -> Unit) {
 @Composable
 fun MovieScreenPreview(){
     MovielistingsappTheme{
-        MovieScreen(onMovieClick = { })
+        MovieScreen(onMovieClick = { }, "soobin@mail.com", onLogout = { })
     }
 }
